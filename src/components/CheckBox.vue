@@ -1,16 +1,18 @@
 <template>
   <div>
     <label class="container">
-      <input type="checkbox">
+      <input type="checkbox" :checked="checked" disabled/>
       <span class="checkmark"></span>
     </label>
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "CheckBox.vue"
+  name: "CheckBox.vue",
+  props: {
+    'checked': Boolean
+  }
 }
 </script>
 

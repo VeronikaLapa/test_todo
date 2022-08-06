@@ -8,10 +8,14 @@
       </template>
       <template v-slot:body>
         <label class="label">Описание</label>
-        <input type="text" placeholder="Введите описание" class="input">
+        <input type="text"
+               :value="newTodo"
+               @change="getTodo"
+               placeholder="Введите описание"
+               class="input">
       </template>
       <template v-slot:footer>
-        <button class="create-button" >
+        <button class="create-button" @click="addTodo">
           Создать
         </button>
       </template>
@@ -27,6 +31,20 @@ export default {
   data: () => {
     return {
       showModal: false
+    }
+  },
+  methods: {
+    getTodo(e){
+      this.$store.dispatch('getTodo', e.target.value)
+    },
+    addTodo(){
+      this.$store.dispatch('addTodo')
+      this.$store.dispatch('clearTodo')
+    }
+  },
+  computed: {
+    newTodo(){
+      return this.$store.getters.newTodo
     }
   }
 }

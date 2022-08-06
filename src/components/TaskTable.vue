@@ -7,46 +7,18 @@
     <th class="col__date">Дата</th>
     </thead>
     <tbody>
-    <tr>
+    <tr v-for="todo in todos" :key="todo.id">
       <td class="checkbox_container">
-        <CheckBox class="checkbox"/>
+        <CheckBox class="checkbox" @click="complete(todo)" :checked="todo.completed"/>
       </td>
       <td>
-        Описание задачи
+        {{todo.body}}
+      </td>
+      <td :class="todo.completed?'done':'progress'">
+        {{todo.completed?"Выполнено":"В работе"}}
       </td>
       <td>
-        In progress
-      </td>
-      <td>
-        01.01.2020
-      </td>
-    </tr>
-    <tr>
-      <td class="checkbox_container">
-        <CheckBox class="checkbox"/>
-      </td>
-      <td>
-        Описание задачи
-      </td>
-      <td>
-        In progress
-      </td>
-      <td>
-        01.01.2020
-      </td>
-    </tr>
-    <tr>
-      <td class="checkbox_container">
-        <CheckBox class="checkbox"/>
-      </td>
-      <td>
-        Описание задачи
-      </td>
-      <td>
-        In progress
-      </td>
-      <td>
-        01.01.2020
+        {{formatDate(todo.date)}}
       </td>
     </tr>
     </tbody>
@@ -57,7 +29,23 @@
 import CheckBox from "@/components/CheckBox";
 export default {
   name: "TaskTable",
-  components: {CheckBox}
+  components: {CheckBox},
+  computed: {
+    todos(){
+      return this.$store.getters.todos
+    }
+  },
+  methods: {
+    complete(todo){
+      this.$store.dispatch('completeTodo', todo)
+    },
+    formatDate(date) {
+      const dd = String(date.getDate()).padStart(2, '0');
+      const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const yyyy = date.getFullYear();
+      return `${dd}.${mm}.${yyyy}`
+    }
+  }
 }
 </script>
 
@@ -116,5 +104,11 @@ export default {
 }
 .col__date {
 
+}
+.done {
+  color: #134EC1
+}
+.progress {
+  color: #F89B11
 }
 </style>
