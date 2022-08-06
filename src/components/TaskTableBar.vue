@@ -4,7 +4,7 @@
       <label>
         <img src="../assets/search.svg" class="search-icon"/>
       </label>
-      <input type="search" placeholder="Поиск ID, Имени, статуса или даты" @change="onChangeSearch($event)">
+      <input type="search" placeholder="Поиск ID, Имени, статуса или даты" @input="onChangeSearch($event)">
     </div>
     <div>
       <label>Сортировать по:</label>
