@@ -27,6 +27,7 @@
 
 <script>
 import CheckBox from "@/components/CheckBox";
+import {formatDate} from "@/utils";
 export default {
   name: "TaskTable",
   components: {CheckBox},
@@ -40,10 +41,7 @@ export default {
       this.$store.dispatch('completeTodo', todo)
     },
     formatDate(date) {
-      const dd = String(date.getDate()).padStart(2, '0');
-      const mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-      const yyyy = date.getFullYear();
-      return `${dd}.${mm}.${yyyy}`
+      return formatDate(date);
     }
   }
 }

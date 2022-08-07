@@ -1,4 +1,5 @@
 import Vuex from 'vuex';
+import {formatDate} from "@/utils";
 
 export const ORDER = {date: 'date', status: 'status'}
 export const store = new Vuex.Store({
@@ -16,7 +17,7 @@ export const store = new Vuex.Store({
             state.todos.push({
                 body: state.newTodo,
                 completed: false,
-                date: new Date()
+                date: (new Date()).toISOString()
             })
         },
         COMPLETE_TODO(state, todo){
@@ -30,6 +31,16 @@ export const store = new Vuex.Store({
         },
         SET_SEARCH(state, search) {
             state.search = search;
+        },
+        LOAD_STORE() {
+            if(localStorage.getItem('store')) {
+                try {
+                    this.replaceState(JSON.parse(localStorage.getItem('store')));
+                }
+                catch(e) {
+                    console.log('Could not initialize store', e);
+                }
+            }
         }
     },
     actions: {
@@ -50,6 +61,9 @@ export const store = new Vuex.Store({
         },
         setSearch({commit}, search) {
             commit('SET_SEARCH', search)
+        },
+        loadStore({commit}) {
+            commit('LOAD_STORE');
         }
     },
     getters: {
@@ -62,6 +76,7 @@ export const store = new Vuex.Store({
                     return todo.body.includes(state.search)
                         || (todo.completed && "Выполнено".includes(state.search))
                         || (!todo.completed && "В работе".includes(state.search))
+                        || formatDate(todo.date).includes(state.search)
                 })
             } else {
                 res = state.todos;
@@ -77,3 +92,4 @@ export const store = new Vuex.Store({
 
     }
 });
+

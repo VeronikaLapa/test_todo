@@ -1,7 +1,9 @@
 <template>
   <header>
-    <h1>To do list</h1>
-    <button class="plus-button" @click="showModal = true"><img src="../assets/plus.svg" alt="add"/></button>
+    <div class="header">
+      <h1>To do list</h1>
+      <button class="plus-button" @click="showModal = true"><img src="../assets/plus.svg" alt="add"/></button>
+    </div>
     <ModalDialog v-if="showModal" @close="showModal = false">
       <template v-slot:header>
         <span>Создать новую задачу</span>
@@ -40,6 +42,7 @@ export default {
     addTodo(){
       this.$store.dispatch('addTodo')
       this.$store.dispatch('clearTodo')
+      this.showModal = false;
     }
   },
   computed: {
@@ -51,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-header {
+.header {
   display: flex;
   justify-content: space-between;
 }
