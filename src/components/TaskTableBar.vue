@@ -4,13 +4,13 @@
       <label>
         <img src="../assets/search.svg" class="search-icon"/>
       </label>
-      <input type="search" placeholder="Поиск ID, Имени, статуса или даты" @input="onChangeSearch($event)">
+      <input type="search" placeholder="Поиск ID, Имени, статуса или даты" @input="onChangeSearch($event)" :value="searchValue">
     </div>
     <div>
       <label>Сортировать по:</label>
-      <select @change="onChangeOrder($event)">
-        <option key="date" value="date">Дата</option>
-        <option key="status" value="status">Статус</option>
+      <select @change="onChangeOrder($event)" >
+        <option key="date" value="date" :selected="orderValue === 'date'">Дата</option>
+        <option key="status" value="status" :selected="orderValue === 'status'">Статус</option>
       </select>
     </div>
   </div>
@@ -26,6 +26,14 @@ export default {
     onChangeSearch(event) {
       this.$store.dispatch("setSearch", event.target.value);
     },
+  },
+  computed: {
+    searchValue() {
+      return this.$store.getters.getSearch;
+    },
+    orderValue() {
+      return this.$store.getters.getOrder;
+    }
   }
 }
 </script>
@@ -35,6 +43,7 @@ export default {
 .table-bar {
   display: flex;
   justify-content: space-between;
+  min-width: 460px;
 }
 
 select {
@@ -49,6 +58,8 @@ select {
 }
 .search input {
   border: none;
+  width: 250px;
+  margin-left: 5px;
 }
 .search input:focus {
   outline: none;

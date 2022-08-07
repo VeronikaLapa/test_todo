@@ -11,7 +11,7 @@
       <td class="checkbox_container">
         <CheckBox class="checkbox" @click="complete(todo)" :checked="todo.completed"/>
       </td>
-      <td>
+      <td class="task-description">
         {{todo.body}}
       </td>
       <td :class="todo.completed?'done':'progress'">
@@ -51,6 +51,7 @@ export default {
 .table {
   width: 100%;
   margin: 30px 0;
+  min-width: 460px;
 }
 .table tbody:before {
   content: "-";
@@ -63,11 +64,13 @@ export default {
 }
 .table th, .table td {
   text-align: start;
-  padding: 0 10px;
+  padding: 0 15px;
+
 }
 .table th {
   border-left: 1px solid #C4C4C4;
   font-weight: normal;
+  height: 30px;
 }
 .table th:first-child {
   border-left: none;
@@ -98,10 +101,13 @@ export default {
   width: 75%;
 }
 .col__status {
-  width: 10%;
+  width: 13%;
 }
-.col__date {
-
+.task-description {
+  hyphens: auto;
+  max-width: 600px;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 .done {
   color: #134EC1

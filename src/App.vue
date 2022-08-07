@@ -16,7 +16,13 @@ export default {
 <style>
 #app {
   font-family: Montserrat, Helvetica, Arial, sans-serif;
-  margin: 100px 150px;
+  margin: 5% 15%;
+}
+@media only screen and (max-width: 768px) {
+  #app {
+    margin: 0;
+    font-size: 12px;
+  }
 }
 
 </style>

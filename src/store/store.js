@@ -70,7 +70,6 @@ export const store = new Vuex.Store({
         newTodo: state => state.newTodo,
         todos: state  => {
             let res;
-            console.log(state.todos, state.search)
             if (state.search !== '') {
                 res = state.todos.filter(todo=> {
                     return todo.body.includes(state.search)
@@ -81,15 +80,14 @@ export const store = new Vuex.Store({
             } else {
                 res = state.todos;
             }
-            console.log(res);
             if (state.order === ORDER.date) {
                 return res;
             } else {
                 return [...res.filter(todo=>todo.completed), ...res.filter(todo=>!todo.completed)]
             }
         },
-        getOrder: state => state.order
-
+        getOrder: state => state.order,
+        getSearch: state => state.search
     }
 });
 
