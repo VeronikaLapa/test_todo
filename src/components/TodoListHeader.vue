@@ -4,7 +4,7 @@
       <h1>To do list</h1>
       <button class="plus-button" @click="showModal = true"><img src="../assets/plus.svg" alt="add"/></button>
     </div>
-    <ModalDialog v-if="showModal" @close="showModal = false">
+    <ModalDialog v-if="showModal" @close="close">
       <template v-slot:header>
         <span>Создать новую задачу</span>
       </template>
@@ -12,9 +12,11 @@
         <label class="label">Описание</label>
         <input type="text"
                :value="newTodo"
-               @change="getTodo"
+               @input="getTodo"
                placeholder="Введите описание"
-               class="input">
+               class="input"
+               @keyup.enter="addTodo">
+        <div v-if="showError" class="error-message">Описание не может быть пустым</div>
       </template>
       <template v-slot:footer>
         <button class="create-button" @click="addTodo">
@@ -32,17 +34,31 @@ export default {
   components: {ModalDialog},
   data: () => {
     return {
-      showModal: false
+      showModal: false,
+      showError: false
     }
   },
   methods: {
     getTodo(e){
-      this.$store.dispatch('getTodo', e.target.value)
+      this.showError = false;
+      this.$store.dispatch('getTodo', e.target.value);
+    },
+    hideError() {
+      this.showError = false;
     },
     addTodo(){
-      this.$store.dispatch('addTodo')
-      this.$store.dispatch('clearTodo')
+      if (this.$store.getters.newTodo !== '') {
+        this.$store.dispatch('addTodo')
+        this.$store.dispatch('clearTodo')
+        this.showModal = false;
+      } else {
+        this.showError = true;
+      }
+    },
+    close() {
       this.showModal = false;
+      this.showError = false;
+      this.$store.dispatch('clearTodo');
     }
   },
   computed: {
@@ -91,5 +107,14 @@ export default {
 .create-button:hover {
   transform: scale(1.05);
   transition: transform 0.3s;
+}
+.error-message {
+  background-color: #ff9e9e;
+  color: #7d0b0b;
+  border: solid #b63d3d 1px;
+  border-radius: 4px;
+  text-align: center;
+  padding: 5px;
+  margin: 5px 0;
 }
 </style>

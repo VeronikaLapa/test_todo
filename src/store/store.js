@@ -14,11 +14,11 @@ export const store = new Vuex.Store({
             state.newTodo = todo
         },
         ADD_TODO(state){
-            state.todos.push({
+            state.todos = [{
                 body: state.newTodo,
                 completed: false,
                 date: (new Date()).toISOString()
-            })
+            }, ...state.todos]
         },
         COMPLETE_TODO(state, todo){
             todo.completed = !todo.completed
