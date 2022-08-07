@@ -1,24 +1,14 @@
-# test_todo
+# TodoList
+Тестовое задание для СПБ ГБУ Централизованная библиотечная система Выборгского района
 
-## Project setup
-```
-npm install
-```
+# Описание
+Приложение-трекер задач с возможностью добавления задач их сортировки и фильтрации(поиска). Введенные данные сохраняются в localstorage, что позволяет сохранить состояние при перезагрузке страницы
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Запуск приложения
+Для запуска выыполнить в корне репозитория <code>npm install</code> затем <code>npm serve</code>
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# Используемые технологии
+<ul>
+  <li>Vue</li>
+  <li>Vuex</li>
+</ul>
